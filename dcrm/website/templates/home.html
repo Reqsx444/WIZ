@@ -9,9 +9,8 @@
       <th scope="col">ID</th>
       <th scope="col">Created At</th>
       <th scope="col">Client name</th>
-      <th scope="col">vCPU</th>
-      <th scope="col">vRAM</th>
-      <th scope="col">Disk</th>
+      <th scope="col">Accepted</th>
+      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
@@ -22,9 +21,8 @@
       <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
       <td>{{ record.created_at }}</td>
       <td>{{ record.client_name }}</td>
-      <td>{{ record.vcpu }}</td>
-      <td>{{ record.vram }}</td>
-      <td>{{ record.disk }}</td>
+      <td>{{ record.is_accepted }}</td>
+      <td>{{ record.status }}</td>
     </tr>
   {% endfor %}
 {% endif %}

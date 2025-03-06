@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     client_name = models.CharField(max_length=50)
@@ -11,6 +10,27 @@ class Record(models.Model):
     pbs = models.CharField(max_length=50)
     network = models.CharField(max_length=50)
     dmz = models.CharField(max_length=50)
+    disk_profile = models.CharField(max_length=50, null=True, blank=True)
+    pbs_replication = models.CharField(max_length=50, null=True, blank=True)
+    vconnect = models.CharField(max_length=50, null=True, blank=True)
+    adm_hours = models.CharField(max_length=50, null=True, blank=True)
+    ws2022_1 = models.CharField(max_length=50, null=True, blank=True)
+    ws2022_3 = models.CharField(max_length=50, null=True, blank=True)
+    ws2022_cal_1 = models.CharField(max_length=50, null=True, blank=True)
+    ws2022_cal_3 = models.CharField(max_length=50, null=True, blank=True)
+    rds_cal_1 = models.CharField(max_length=50, null=True, blank=True)
+    rds_cal_3 = models.CharField(max_length=50, null=True, blank=True)
+    rds_cal_perpetual = models.CharField(max_length=50, null=True, blank=True)
+    fw_premium = models.CharField(max_length=50, null=True, blank=True)
+    geofw = models.CharField(max_length=50, null=True, blank=True)
+    ipsec = models.CharField(max_length=50, null=True, blank=True)
+    ssl_vpn = models.CharField(max_length=50, null=True, blank=True)
+    dns_guard = models.CharField(max_length=50, null=True, blank=True)
+    webfiltering = models.CharField(max_length=50, null=True, blank=True)
+    ids_ips = models.CharField(max_length=50, null=True, blank=True)
+    vdom = models.CharField(max_length=50, null=True, blank=True)
+    is_accepted = models.CharField(max_length=50, null=True, blank=True)
+    status = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return(f"{self.client_name}")
