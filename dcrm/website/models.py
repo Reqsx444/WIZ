@@ -29,7 +29,7 @@ class Record(models.Model):
     webfiltering = models.CharField(max_length=50, null=True, blank=True)
     ids_ips = models.CharField(max_length=50, null=True, blank=True)
     vdom = models.CharField(max_length=50, null=True, blank=True)
-    is_accepted = models.CharField(max_length=50, null=True, blank=True)
+    is_accepted = models.CharField(max_length=50, null=True, blank=True, default='No')
     status = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
