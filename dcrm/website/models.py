@@ -1,26 +1,31 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     client_name = models.CharField(max_length=50)
-    vcpu = models.CharField(max_length=50)
-    vram = models.CharField(max_length=50)
-    disk = models.CharField(max_length=50)
+    vcpu = models.IntegerField(
+        null=True, 
+        blank=True, 
+        validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(32, "Maksymalna wartość to 32")]
+    )
+    vram = models.IntegerField(null=True, blank=True)
+    disk = models.IntegerField(null=True, blank=True)
     ip = models.CharField(max_length=50)
-    pbs = models.CharField(max_length=50)
+    pbs = models.IntegerField(null=True, blank=True)
     network = models.CharField(max_length=50)
     dmz = models.CharField(max_length=50)
-    disk_profile = models.CharField(max_length=50, null=True, blank=True)
-    pbs_replication = models.CharField(max_length=50, null=True, blank=True)
+    disk_profile = models.IntegerField(null=True, blank=True)
+    pbs_replication = models.IntegerField(null=True, blank=True)
     vconnect = models.CharField(max_length=50, null=True, blank=True)
-    adm_hours = models.CharField(max_length=50, null=True, blank=True)
-    ws2022_1 = models.CharField(max_length=50, null=True, blank=True)
-    ws2022_3 = models.CharField(max_length=50, null=True, blank=True)
-    ws2022_cal_1 = models.CharField(max_length=50, null=True, blank=True)
-    ws2022_cal_3 = models.CharField(max_length=50, null=True, blank=True)
-    rds_cal_1 = models.CharField(max_length=50, null=True, blank=True)
-    rds_cal_3 = models.CharField(max_length=50, null=True, blank=True)
-    rds_cal_perpetual = models.CharField(max_length=50, null=True, blank=True)
+    adm_hours = models.IntegerField(null=True, blank=True)
+    ws2022_1 = models.IntegerField(null=True, blank=True)
+    ws2022_3 = models.IntegerField(null=True, blank=True)
+    ws2022_cal_1 = models.IntegerField(null=True, blank=True)
+    ws2022_cal_3 = models.IntegerField(null=True, blank=True)
+    rds_cal_1 = models.IntegerField(null=True, blank=True)
+    rds_cal_3 = models.IntegerField(null=True, blank=True)
+    rds_cal_perpetual = models.IntegerField(null=True, blank=True)
     fw_premium = models.CharField(max_length=50, null=True, blank=True)
     geofw = models.CharField(max_length=50, null=True, blank=True)
     ipsec = models.CharField(max_length=50, null=True, blank=True)
@@ -33,4 +38,4 @@ class Record(models.Model):
     status = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return(f"{self.client_name}")
+        return self.client_name
