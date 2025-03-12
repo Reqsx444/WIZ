@@ -1,37 +1,37 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">
       <img src="https://dataspace.pl/_next/image?url=http%3A%2F%2Fapi%2Fapp%2Fuploads%2F2024%2F03%2Fds-logo-rgb-1.svg&w=256&q=91" alt="Logo" width="200" height="40" class="d-inline-block align-text-top">
-      <a class="navbar-brand" href="{% url 'home' %}">WIZ</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">VPS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Serwery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Zamówienia</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          </li>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">VPS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Serwery</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Zamówienia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
         </ul>
-        <form class="d-flex" role="search">
+        <form class="d-flex ms-auto" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}">Login</a>
-          </li>
-          {% endif %}
-
-        </ul>
-      </div>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
