@@ -24,7 +24,11 @@ class Record(models.Model):
     pbs = models.IntegerField(null=True, blank=True)
     network = models.CharField(max_length=50)
     dmz = models.CharField(max_length=50)
-    disk_profile = models.IntegerField(null=True, blank=True)
+    disk_profile = models.IntegerField(
+        null=True, 
+        blank=True, 
+        validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(3, "Maksymalna wartość to 3")]
+    )
     pbs_replication = models.IntegerField(null=True, blank=True)
     vconnect = models.CharField(max_length=50, null=True, blank=True)
     adm_hours = models.IntegerField(null=True, blank=True)
