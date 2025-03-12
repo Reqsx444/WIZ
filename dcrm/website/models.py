@@ -20,6 +20,10 @@ class Record(models.Model):
     ip = models.CharField(max_length=50)
     pbs = models.IntegerField(null=True, blank=True)
     network = models.CharField(max_length=50)
+    pub_net_speed = models.IntegerField(
+        null=True, blank=True, default='100',
+        validators=[MinValueValidator(100, "Minimalna wartość to 100"), MaxValueValidator(1000, "Maksymalna wartość to 1000")]
+    )
     dmz = models.CharField(max_length=50)
     disk_profile = models.IntegerField(
         null=True, blank=True,
