@@ -47,14 +47,15 @@ class Record(models.Model):
     status = models.CharField(max_length=50, null=True, blank=True)
 
     def clean(self):
-        """Walidacja: pbs musi być równe disk oraz pbs_replication musi być równe pbs"""
+        """Walidacja: pbs musi być równe disk oraz pbs_replication musi być równe pbs lub 0"""
         errors = {}
 
         if self.pbs is not None and self.disk is not None and self.pbs != self.disk:
             errors["pbs"] = "Wartość PBS musi być równa wartości Disk."
 
-        if self.pbs_replication is not None and self.pbs is not None and self.pbs_replication != self.pbs:
-            errors["pbs_replication"] = "Wartość PBS Replication musi być równa wartości PBS."
+        if self.pbs_replication is not None and self.pbs is not None:
+            if self.pbs_replication != self.pbs and self.pbs_replication != 0:
+                errors["pbs_replication"] = "Wartość PBS Replication musi być równa wartości PBS lub 0."
 
         if errors:
             raise ValidationError(errors)
