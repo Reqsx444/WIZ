@@ -17,7 +17,10 @@ class Record(models.Model):
         null=True, blank=True,
         validators=[MinValueValidator(20, "Minimalna wartość to 20"), MaxValueValidator(1000, "Maksymalna wartość to 1000")]
     )
-    ip = models.CharField(max_length=50)
+    ip = models.IntegerField(
+        null=True, blank=True, default='0',
+        validators=[MinValueValidator(0, "Minimalna wartość to 0"), MaxValueValidator(20, "Maksymalna wartość to 20")]
+    )
     pbs = models.IntegerField(null=True, blank=True)
     network = models.CharField(max_length=50)
     pub_net_speed = models.IntegerField(
@@ -26,7 +29,7 @@ class Record(models.Model):
     )
     dmz = models.CharField(max_length=50)
     disk_profile = models.IntegerField(
-        null=True, blank=True,
+        null=True, blank=True, default='1',
         validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(3, "Maksymalna wartość to 3")]
     )
     pbs_replication = models.IntegerField(null=True, blank=True)
@@ -48,7 +51,7 @@ class Record(models.Model):
     ids_ips = models.CharField(max_length=50, null=True, blank=True)
     vdom = models.CharField(max_length=50, null=True, blank=True)
     is_accepted = models.CharField(max_length=50, null=True, blank=True, default='No')
-    status = models.CharField(max_length=50, null=True, blank=True)
+    status = models.CharField(max_length=50, null=True, blank=True, default='In progress')
 
     def clean(self):
         """Walidacja: pbs musi być równe disk oraz pbs_replication musi być równe pbs lub 0"""

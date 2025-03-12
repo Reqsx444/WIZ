@@ -23,13 +23,13 @@ class AddRecordForm(forms.ModelForm):
         label_suffix=""
     )
     adm_hours = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Adm hours",
         label_suffix=""
     )
     vconnect = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="vConnect",
         label_suffix=""
@@ -55,7 +55,7 @@ class AddRecordForm(forms.ModelForm):
         label_suffix=""
     )
     pbs_replication = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Backup replication",
         label_suffix=""
@@ -63,19 +63,19 @@ class AddRecordForm(forms.ModelForm):
 
     # Networking Section
     ip = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="IP",
         label_suffix=""
     )
     network = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Network",
         label_suffix=""
     )
     dmz = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="DMZ",
         label_suffix=""
@@ -89,49 +89,49 @@ class AddRecordForm(forms.ModelForm):
 
     # Security Section
     fw_premium = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Firewall Premium",
         label_suffix=""
     )
     geofw = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="GeoFirewall",
         label_suffix=""
     )
     ipsec = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="IPSec",
         label_suffix=""
     )
     ssl_vpn = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="SSL-VPN",
         label_suffix=""
     )
     dns_guard = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="DNS Guard",
         label_suffix=""
     )
     webfiltering = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Web Filtering",
         label_suffix=""
     )
     ids_ips = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="IDS/IPS/AV",
         label_suffix=""
     )
     vdom = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="VDOM",
         label_suffix=""
@@ -139,43 +139,43 @@ class AddRecordForm(forms.ModelForm):
 
     # Licenses Section
     ws2022_1 = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Windows Server 2022 (1Y)",
         label_suffix=""
     )
     ws2022_3 = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Windows Server 2022 (3Y)",
         label_suffix=""
     )
     ws2022_cal_1 = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Windows Server 2022 CAL (1Y)",
         label_suffix=""
     )
     ws2022_cal_3 = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Windows Server 2022 CAL (3Y)",
         label_suffix=""
     )
     rds_cal_1 = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="RDS CAL (1Y)",
         label_suffix=""
     )
     rds_cal_3 = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="RDS CAL (3Y)",
         label_suffix=""
     )
     rds_cal_perpetual = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="RDS CAL (Perpetual)",
         label_suffix=""
