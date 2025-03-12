@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 
 class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -9,8 +10,16 @@ class Record(models.Model):
         blank=True, 
         validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(32, "Maksymalna wartość to 32")]
     )
-    vram = models.IntegerField(null=True, blank=True)
-    disk = models.IntegerField(null=True, blank=True)
+    vram = models.IntegerField(
+        null=True, 
+        blank=True, 
+        validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(32, "Maksymalna wartość to 32")]
+    )
+    disk = models.IntegerField(
+        null=True, 
+        blank=True, 
+        validators=[MinValueValidator(20, "Minimalna wartość to 20"), MaxValueValidator(1000, "Maksymalna wartość to 1000")]
+    )
     ip = models.CharField(max_length=50)
     pbs = models.IntegerField(null=True, blank=True)
     network = models.CharField(max_length=50)
@@ -36,6 +45,11 @@ class Record(models.Model):
     vdom = models.CharField(max_length=50, null=True, blank=True)
     is_accepted = models.CharField(max_length=50, null=True, blank=True, default='No')
     status = models.CharField(max_length=50, null=True, blank=True)
+
+    def clean(self):
+        """Walidacja: pbs musi być równe disk"""
+        if self.pbs is not None and self.disk is not None and self.pbs != self.disk:
+            raise ValidationError({"pbs": "Wartość PBS musi być równa wartości Disk."})
 
     def __str__(self):
         return self.client_name
