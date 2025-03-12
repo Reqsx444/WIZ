@@ -6,18 +6,15 @@ class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     client_name = models.CharField(max_length=50)
     vcpu = models.IntegerField(
-        null=True, 
-        blank=True, 
+        null=True, blank=True,
         validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(32, "Maksymalna wartość to 32")]
     )
     vram = models.IntegerField(
-        null=True, 
-        blank=True, 
+        null=True, blank=True,
         validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(32, "Maksymalna wartość to 32")]
     )
     disk = models.IntegerField(
-        null=True, 
-        blank=True, 
+        null=True, blank=True,
         validators=[MinValueValidator(20, "Minimalna wartość to 20"), MaxValueValidator(1000, "Maksymalna wartość to 1000")]
     )
     ip = models.CharField(max_length=50)
@@ -25,8 +22,7 @@ class Record(models.Model):
     network = models.CharField(max_length=50)
     dmz = models.CharField(max_length=50)
     disk_profile = models.IntegerField(
-        null=True, 
-        blank=True, 
+        null=True, blank=True,
         validators=[MinValueValidator(1, "Minimalna wartość to 1"), MaxValueValidator(3, "Maksymalna wartość to 3")]
     )
     pbs_replication = models.IntegerField(null=True, blank=True)
@@ -51,9 +47,17 @@ class Record(models.Model):
     status = models.CharField(max_length=50, null=True, blank=True)
 
     def clean(self):
-        """Walidacja: pbs musi być równe disk"""
+        """Walidacja: pbs musi być równe disk oraz pbs_replication musi być równe pbs"""
+        errors = {}
+
         if self.pbs is not None and self.disk is not None and self.pbs != self.disk:
-            raise ValidationError({"pbs": "Wartość PBS musi być równa wartości Disk."})
+            errors["pbs"] = "Wartość PBS musi być równa wartości Disk."
+
+        if self.pbs_replication is not None and self.pbs is not None and self.pbs_replication != self.pbs:
+            errors["pbs_replication"] = "Wartość PBS Replication musi być równa wartości PBS."
+
+        if errors:
+            raise ValidationError(errors)
 
     def __str__(self):
         return self.client_name
