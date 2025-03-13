@@ -1,74 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="col-md-6 offset-md-3">
-    <h1> Add Record </h1>
-    <br/>
-    <form method="POST">
-        {% csrf_token %}
-
-        <fieldset class="border p-3 mb-3">
-            <legend class="w-auto">Client Information</legend>
-            {{ form.client_name }}
-        </fieldset>
-
-        <fieldset class="border p-3 mb-3">
-            <legend class="w-auto">Compute</legend>
-            {{ form.vcpu }}
-            {{ form.vram }}
-            {{ form.adm_hours }}
-            {{ form.vconnect }}
-        </fieldset>
-
-        <fieldset class="border p-3 mb-3">
-            <legend class="w-auto">Storage</legend>
-            {{ form.disk }}
-            {{ form.disk_profile }}
-            {{ form.pbs }}
-            {{ form.pbs_replication }}
-        </fieldset>
-
-        <fieldset class="border p-3 mb-3">
-            <legend class="w-auto">Networking</legend>
-            {{ form.ip }}
-            {{ form.network }}
-            {{ form.dmz }}
-            {{ form.pub_net_speed }}
-        </fieldset>
-
-        <fieldset class="border p-3 mb-3">
-            <legend class="w-auto">Security</legend>
-            {{ form.fw_premium }}
-            {{ form.geofw }}
-            {{ form.ipsec }}
-            {{ form.ssl_vpn }}
-            {{ form.dns_guard }}
-            {{ form.webfiltering }}
-            {{ form.ids_ips }}
-            {{ form.vdom }}
-        </fieldset>
-
-        <fieldset class="border p-3 mb-3">
-            <legend class="w-auto">Licenses</legend>
-            {{ form.ws2022_1 }}
-            {{ form.ws2022_3 }}
-            {{ form.ws2022_cal_1 }}
-            {{ form.ws2022_cal_3 }}
-            {{ form.rds_cal_1 }}
-            {{ form.rds_cal_3 }}
-            {{ form.rds_cal_perpetual }}
-        </fieldset>
-
-        <fieldset class="border p-3 mb-3">
-            <legend class="w-auto">General Information</legend>
-            {{ form.is_accepted }}
-            {{ form.status }}
-        </fieldset>
-
-        <br/>
-        <button type="submit" class="btn btn-secondary">Update Record</button>
-        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
-    </form>
+<div class="col-md-6 offset-md-3"></div>
+<h1> Add record </h1>
+</br>
+<form method="POST">
+	{% csrf_token %}
+    {{ form.as_p }}
+    
+<br/>
+<button type="submit" class="btn btn-secondary">Update Record</button>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+</form>
 </div>
-
 {% endblock %}

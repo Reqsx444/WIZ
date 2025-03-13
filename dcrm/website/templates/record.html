@@ -11,10 +11,10 @@
       <!-- Compute Section -->
       <h3>Compute</h3>
       <hr>
-      <h5 class="card-title"><strong>vCPU: </strong>{{ customer_record.vcpu }}</h5>
-      <h5 class="card-title"><strong>vRAM: </strong>{{ customer_record.vram }}</h5>
-      <h5 class="card-title"><strong>Adm Hours: </strong>{{ customer_record.adm_hours }}</h5>
-      <h5 class="card-title"><strong>vConnect: </strong>{{ customer_record.vcconnect }}</h5>
+      <h5 class="card-title">vCPU: {{ customer_record.vcpu }}</h5>
+      <h5 class="card-title">vRAM: {{ customer_record.vram }}</h5>
+      <h5 class="card-title">Adm Hours: {{ customer_record.adm_hours }}</h5>
+      <h5 class="card-title">vConnect: {{ customer_record.vcconnect }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
@@ -22,10 +22,10 @@
       <!-- Storage Section -->
       <h3>Storage</h3>
       <hr>
-      <h5 class="card-title"><strong>Disk: </strong>{{ customer_record.disk }}</h5>
-      <h5 class="card-title"><strong>Disk profile: </strong>{{ customer_record.disk_profile }}</h5>
-      <h5 class="card-title"><strong>PBS Backup: </strong>{{ customer_record.pbs }}</h5>
-      <h5 class="card-title"><strong>PBS Replication: </strong>{{ customer_record.pbs_replication }}</h5>
+      <h5 class="card-title">Disk: {{ customer_record.disk }}</h5>
+      <h5 class="card-title">Disk profile: {{ customer_record.disk_profile }}</h5>
+      <h5 class="card-title">PBS Backup: {{ customer_record.pbs }}</h5>
+      <h5 class="card-title">PBS Replication: {{ customer_record.pbs_replication }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
@@ -33,10 +33,10 @@
       <!-- Networking Section -->
       <h3>Networking</h3>
       <hr>
-      <h5 class="card-title"><strong>IP: </strong>{{ customer_record.ip }}</h5>
-      <h5 class="card-title"><strong>Public Network Speed: </strong>{{ customer_record.pub_net_speed }}</h5>
-      <h5 class="card-title"><strong>Network: </strong>{{ customer_record.network }}</h5>
-      <h5 class="card-title"><strong>DMZ: </strong>{{ customer_record.dmz }}</h5>
+      <h5 class="card-title">IP: {{ customer_record.ip }}</h5>
+      <h5 class="card-title">Public Network Speed: {{ customer_record.pub_net_speed }}</h5>
+      <h5 class="card-title">Network: {{ customer_record.network }}</h5>
+      <h5 class="card-title">DMZ: {{ customer_record.dmz }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
@@ -44,14 +44,14 @@
       <!-- Security Section -->
       <h3>Security</h3>
       <hr>
-      <h5 class="card-title"><strong>Firewall Premium (10 rules pack): </strong>{{ customer_record.fw_premium }}</h5>
-      <h5 class="card-title"><strong>GeoFirewall: </strong>{{ customer_record.geofw }}</h5>
-      <h5 class="card-title"><strong>IPSec: </strong>{{ customer_record.ipsec }}</h5>
-      <h5 class="card-title"><strong>SSL-VPN Accounts: </strong>{{ customer_record.ssl_vpn }}</h5>
-      <h5 class="card-title"><strong>DNS Guard: </strong>{{ customer_record.dns_guard }}</h5>
-      <h5 class="card-title"><strong>Webfiltering: </strong>{{ customer_record.webfiltering }}</h5>
-      <h5 class="card-title"><strong>IDS/IPS/AV: </strong>{{ customer_record.ids_ips }}</h5>
-      <h5 class="card-title"><strong>VDOM: </strong>{{ customer_record.vdom }}</h5>
+      <h5 class="card-title">Firewall Premium (10 rules pack): {{ customer_record.fw_premium }}</h5>
+      <h5 class="card-title">GeoFirewall: {{ customer_record.geofw }}</h5>
+      <h5 class="card-title">IPSec: {{ customer_record.ipsec }}</h5>
+      <h5 class="card-title">SSL-VPN Accounts: {{ customer_record.ssl_vpn }}</h5>
+      <h5 class="card-title">DNS Guard: {{ customer_record.dns_guard }}</h5>
+      <h5 class="card-title">Webfiltering: {{ customer_record.webfiltering }}</h5>
+      <h5 class="card-title">IDS/IPS/AV: {{ customer_record.ids_ips }}</h5>
+      <h5 class="card-title">VDOM: {{ customer_record.vdom }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
@@ -59,13 +59,13 @@
       <!-- Licenses Section -->
       <h3>Licenses</h3>
       <hr>
-      <h5 class="card-title"><strong>Windows Server 2022 (1Y): </strong>{{ customer_record.ws2022_1 }}</h5>
-      <h5 class="card-title"><strong>Windows Server 2022 (3Y): </strong>{{ customer_record.ws2022_3 }}</h5>
-      <h5 class="card-title"><strong>Windows Server 2022 CAL (1Y): </strong>{{ customer_record.ws2022_cal_1 }}</h5>
-      <h5 class="card-title"><strong>Windows Server 2022 CAL (3Y): </strong>{{ customer_record.ws2022_cal_3 }}</h5>
-      <h5 class="card-title"><strong>RDS CAL (1Y): </strong>{{ customer_record.rds_cal_1 }}</h5>
-      <h5 class="card-title"><strong>RDS CAL (3Y): </strong>{{ customer_record.rds_cal_3 }}</h5>
-      <h5 class="card-title"><strong>RDS CAL (PERPETUAL): </strong>{{ customer_record.rds_cal_perpetual }}</h5>
+      <h5 class="card-title">Windows Server 2022 (1Y): {{ customer_record.ws2022_1 }}</h5>
+      <h5 class="card-title">Windows Server 2022 (3Y): {{ customer_record.ws2022_3 }}</h5>
+      <h5 class="card-title">Windows Server 2022 CAL (1Y): {{ customer_record.ws2022_cal_1 }}</h5>
+      <h5 class="card-title">Windows Server 2022 CAL (3Y): {{ customer_record.ws2022_cal_3 }}</h5>
+      <h5 class="card-title">RDS CAL (1Y): {{ customer_record.rds_cal_1 }}</h5>
+      <h5 class="card-title">RDS CAL (3Y): {{ customer_record.rds_cal_3 }}</h5>
+      <h5 class="card-title">RDS CAL (PERPETUAL): {{ customer_record.rds_cal_perpetual }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
