@@ -76,10 +76,20 @@
       <h5 class="card-title"><strong>Status: </strong>{{ customer_record.status }}</h5>
     </div>
 </div>
-</br></br>
-<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
-<a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger">Delete</a>
-<a href="{% url 'update_record' customer_record.id %}" class="btn btn-secondary">Update</a>
-<a href="{% url 'generate_xlsx' customer_record.id %}" class="btn btn-success">Download XLSX</a>
+
+<!-- Dodanie przycisków na tym samym poziomie -->
+<div class="d-flex justify-content-between mt-3">
+    <!-- Przyciski po lewej stronie -->
+    <div>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+        <a href="{% url 'update_record' customer_record.id %}" class="btn btn-secondary">Update</a>
+        <a href="{% url 'generate_xlsx' customer_record.id %}" class="btn btn-success">Download XLSX</a>
+    </div>
+    
+    <!-- Przycisk Delete po prawej stronie -->
+    <div>
+        <a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
 
 {% endblock %}

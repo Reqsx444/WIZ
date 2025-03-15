@@ -1,15 +1,93 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="col-md-6 offset-md-3"></div>
-<h1> Kreator wyceny </h1>
-</br>
-<form method="POST" action="{% url 'add_record' %}">
-	{% csrf_token %}
-    {{ form.as_p }}
+<div class="card">
+    <div class="card-header">
+        <strong>ID:</strong> {{ customer_record.id }} <br>
+        <strong>Date & Client name:</strong> {{ customer_record.created_at }} {{ customer_record.client_name }}
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{% url 'add_record' %}">
+            {% csrf_token %}
+            
+            <div class="container-fluid">  
+                <!-- Compute Section -->
+                <h3>Compute</h3>
+                <hr>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.client_name.label_tag }} {{ form.client_name }}</div>
+                    <div class="col-md-6">{{ form.vcpu.label_tag }} {{ form.vcpu }}</div>
+                    <div class="col-md-6">{{ form.vram.label_tag }} {{ form.vram }}</div>
+                    <div class="col-md-6">{{ form.adm_hours.label_tag }} {{ form.adm_hours }}</div>
+                    <div class="col-md-6">{{ form.vcconnect.label_tag }} {{ form.vcconnect }}</div>
+                </div>
 
-<br/>
-<button type="submit" class="btn btn-secondary">Dodaj</button>
-</form>
+                <!-- Storage Section -->
+                <h3>Storage</h3>
+                <hr>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.disk.label_tag }} {{ form.disk }}</div>
+                    <div class="col-md-6">{{ form.disk_profile.label_tag }} {{ form.disk_profile }}</div>
+                    <div class="col-md-6">{{ form.pbs.label_tag }} {{ form.pbs }}</div>
+                    <div class="col-md-6">{{ form.pbs_replication.label_tag }} {{ form.pbs_replication }}</div>
+                </div>
+
+                <!-- Networking Section -->
+                <h3>Networking</h3>
+                <hr>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.ip.label_tag }} {{ form.ip }}</div>
+                    <div class="col-md-6">{{ form.pub_net_speed.label_tag }} {{ form.pub_net_speed }}</div>
+                    <div class="col-md-6">{{ form.network.label_tag }} {{ form.network }}</div>
+                    <div class="col-md-6">{{ form.dmz.label_tag }} {{ form.dmz }}</div>
+                </div>
+
+                <!-- Security Section -->
+                <h3>Security</h3>
+                <hr>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.fw_premium.label_tag }} {{ form.fw_premium }}</div>
+                    <div class="col-md-6">{{ form.geofw.label_tag }} {{ form.geofw }}</div>
+                    <div class="col-md-6">{{ form.ipsec.label_tag }} {{ form.ipsec }}</div>
+                    <div class="col-md-6">{{ form.ssl_vpn.label_tag }} {{ form.ssl_vpn }}</div>
+                    <div class="col-md-6">{{ form.dns_guard.label_tag }} {{ form.dns_guard }}</div>
+                    <div class="col-md-6">{{ form.webfiltering.label_tag }} {{ form.webfiltering }}</div>
+                    <div class="col-md-6">{{ form.ids_ips.label_tag }} {{ form.ids_ips }}</div>
+                    <div class="col-md-6">{{ form.vdom.label_tag }} {{ form.vdom }}</div>
+                </div>
+
+                <!-- Licenses Section -->
+                <h3>Licenses</h3>
+                <hr>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.ws2022_1.label_tag }} {{ form.ws2022_1 }}</div>
+                    <div class="col-md-6">{{ form.ws2022_3.label_tag }} {{ form.ws2022_3 }}</div>
+                    <div class="col-md-6">{{ form.ws2022_cal_1.label_tag }} {{ form.ws2022_cal_1 }}</div>
+                    <div class="col-md-6">{{ form.ws2022_cal_3.label_tag }} {{ form.ws2022_cal_3 }}</div>
+                    <div class="col-md-6">{{ form.rds_cal_1.label_tag }} {{ form.rds_cal_1 }}</div>
+                    <div class="col-md-6">{{ form.rds_cal_3.label_tag }} {{ form.rds_cal_3 }}</div>
+                    <div class="col-md-6">{{ form.rds_cal_perpetual.label_tag }} {{ form.rds_cal_perpetual }}</div>
+                </div>
+
+                <!-- General Information -->
+                <h3>General Information</h3>
+                <hr>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.type.label_tag }} {{ form.type }}</div>
+                    <div class="col-md-6">{{ form.procedure.label_tag }} {{ form.procedure }}</div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.is_accepted.label_tag }} {{ form.is_accepted }}</div>
+                    <div class="col-md-6">{{ form.status.label_tag }} {{ form.status }}</div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+            </div>
+        </form>
+    </div>
 </div>
+
 {% endblock %}

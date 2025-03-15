@@ -205,26 +205,26 @@ class AddRecordForm(forms.ModelForm):
     )
 
     # General Information
-    procedure = forms.CharField(
+    procedure = forms.ChoiceField(
+        choices=[("Nowy VPS", "Nowy VPS"), ("Rozbudowa obecnego VPS", "Rozbudowa obecnego VPS")],
         required=True,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
+        widget=forms.Select(attrs={"class": "form-control"}),
         label="Typ",
         label_suffix="",
-        initial="Nowa maszyna"
     )
-    is_accepted = forms.CharField(
+    is_accepted = forms.ChoiceField(
+        choices=[("Nie", "Nie"), ("Tak", "Tak")],
         required=True,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Accepted",
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Zaakceptowane",
         label_suffix="",
-        initial="No"
     )
-    status = forms.CharField(
+    status = forms.ChoiceField(
+        choices=[("W trakcie", "W trakcie"), ("Zakończone", "Zakończone")],
         required=True,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
+        widget=forms.Select(attrs={"class": "form-control"}),
         label="Status",
         label_suffix="",
-        initial="In progress"
     )
 
     class Meta:
