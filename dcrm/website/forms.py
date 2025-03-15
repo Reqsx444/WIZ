@@ -45,7 +45,7 @@ class AddRecordForm(forms.ModelForm):
         label_suffix=""
     )
     disk_profile = forms.ChoiceField(
-        choices=[("1", "1"), ("2", "2"), ("3", "3")],
+        choices=[(1, "1"), (2, "2"), (3, "3")],
         required=True,
         widget=forms.Select(attrs={"class": "form-control"}),
         label="Profil wydajnościowy dysku",
@@ -60,7 +60,7 @@ class AddRecordForm(forms.ModelForm):
     pbs_replication = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Backup replication",
+        label="PBS - replikacja",
         label_suffix="",
         initial="0"
     )
@@ -69,88 +69,89 @@ class AddRecordForm(forms.ModelForm):
     ip = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="IP",
+        label="Dodatkowe publiczne IP",
         label_suffix="",
         initial="0"
     )
-    network = forms.CharField(
+    network = forms.ChoiceField(
+        choices=[(0, "No"), (1, "Yes")],
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Network",
-        label_suffix="",
-        initial="0"
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Sieć wewnętrzna 1Gbit/s",
+        label_suffix=""
     )
     dmz = forms.ChoiceField(
-        choices=[("No", "No"), ("Yes", "Yes")],
+        choices=[(0, "No"), (1, "Yes")],
         required=True,
         widget=forms.Select(attrs={"class": "form-control"}),
         label="DMZ",
         label_suffix=""
     )
-    pub_net_speed = forms.CharField(
+    pub_net_speed = forms.ChoiceField(
+        choices=[(100, "100Mbps"), (200, "200Mbps"), (300, "300Mbps"), (400, "400Mbps"), (500, "500Mbps"), (600, "600Mbps"), (700, "700Mbps"), (800, "800Mbps"), (900, "900Mbps"), (1000, "1000Mbps")],
         required=True,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Public Network Speed",
-        label_suffix="",
-        initial="100"
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Przepustowość sieci publicznej:",
+        label_suffix=""
     )
 
     # Security Section
-    fw_premium = forms.CharField(
+    fw_premium = forms.ChoiceField(
+        choices=[(0, "0"), (1, "10"), (2, "20"), (3, "30")],
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Firewall Premium",
-        label_suffix="",
-        initial="0"
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="DSS Firewall Premium",
+        label_suffix=""
     )
-    geofw = forms.CharField(
+    geofw = forms.ChoiceField(
+        choices=[(0, 1), ("Yes", "Yes")],
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="GeoFirewall",
-        label_suffix="",
-        initial="0"
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="DSS GeoFirewall",
+        label_suffix=""
     )
-    ipsec = forms.CharField(
+    ipsec = forms.ChoiceField(
+        choices=[(0, "No"), (1, "Yes")],
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="IPSec",
-        label_suffix="",
-        initial="0"
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="DSS IPSec",
+        label_suffix=""
     )
     ssl_vpn = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="SSL-VPN",
+        label="DSS konto SSL-VPN",
         label_suffix="",
         initial="0"
     )
-    dns_guard = forms.CharField(
+    dns_guard = forms.ChoiceField(
+        choices=[(0, "No"), (1, "Yes")],
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="DNS Guard",
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="DSS Guard DNS",
+        label_suffix=""
+    )
+    webfiltering = forms.ChoiceField(
+        choices=[(0, "No"), (1, "Yes")],
+        required=False,
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="DSS Webfiltering",
+        label_suffix=""
+    )
+    ids_ips = forms.ChoiceField(
+        choices=[(0, "No"), (1, "Yes")],
+        required=False,
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="DSS IDS/IPS/AV 100Mbit/s",
         label_suffix="",
         initial="0"
     )
-    webfiltering = forms.CharField(
+    vdom = forms.ChoiceField(
+        choices=[(0, "No"), (1, "Yes")],
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Web Filtering",
-        label_suffix="",
-        initial="0"
-    )
-    ids_ips = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="IDS/IPS/AV",
-        label_suffix="",
-        initial="0"
-    )
-    vdom = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="VDOM",
-        label_suffix="",
-        initial="0"
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="DSS vDOM",
+        label_suffix=""
     )
 
     # Licenses Section
@@ -213,7 +214,7 @@ class AddRecordForm(forms.ModelForm):
         label_suffix="",
     )
     is_accepted = forms.ChoiceField(
-        choices=[("Nie", "Nie"), ("Tak", "Tak")],
+        choices=[(0, "Nie"), (1, "Tak")],
         required=True,
         widget=forms.Select(attrs={"class": "form-control"}),
         label="Zaakceptowane",
