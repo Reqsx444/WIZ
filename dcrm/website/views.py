@@ -100,6 +100,8 @@ def generate_xlsx(request, record_id):
         "Dysk": customer_record.disk,
         "Profil wydajnościowy dysku": customer_record.disk_profile,
         "Backup": customer_record.pbs,
+        #Do zweryfikowania dmz
+        "Strefa bezpieczeństwa": customer_record.dmz,
         "Replikacja Backup": customer_record.pbs_replication,
         "Adresacja IPv4": customer_record.ip,
         "Sieć wewnętrzna - 1Gbit/s": customer_record.network,
