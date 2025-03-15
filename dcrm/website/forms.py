@@ -5,7 +5,7 @@ class AddRecordForm(forms.ModelForm):
     client_name = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Client Name",
+        label="Nazwa klienta",
         label_suffix=""
     )
 
@@ -25,7 +25,7 @@ class AddRecordForm(forms.ModelForm):
     adm_hours = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Adm hours",
+        label="Godziny administracyjne",
         label_suffix="",
         initial="0"
     )
@@ -41,15 +41,15 @@ class AddRecordForm(forms.ModelForm):
     disk = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Disk",
+        label="Dysk",
         label_suffix=""
     )
-    disk_profile = forms.CharField(
+    disk_profile = forms.ChoiceField(
+        choices=[("1", "1"), ("2", "2"), ("3", "3")],
         required=True,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        label="Disk profile",
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Profil wydajnościowy dysku",
         label_suffix="",
-        initial="1"
     )
     pbs = forms.CharField(
         required=True,
@@ -80,12 +80,12 @@ class AddRecordForm(forms.ModelForm):
         label_suffix="",
         initial="0"
     )
-    dmz = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
+    dmz = forms.ChoiceField(
+        choices=[("No", "No"), ("Yes", "Yes")],
+        required=True,
+        widget=forms.Select(attrs={"class": "form-control"}),
         label="DMZ",
-        label_suffix="",
-        initial="0"
+        label_suffix=""
     )
     pub_net_speed = forms.CharField(
         required=True,
@@ -205,6 +205,13 @@ class AddRecordForm(forms.ModelForm):
     )
 
     # General Information
+    procedure = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        label="Typ",
+        label_suffix="",
+        initial="Nowa maszyna"
+    )
     is_accepted = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={"class": "form-control"}),

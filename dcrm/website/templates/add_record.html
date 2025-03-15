@@ -2,14 +2,14 @@
 {% block content %}
 
 <div class="col-md-6 offset-md-3"></div>
-<h1> Add record </h1>
+<h1> Kreator wyceny </h1>
 </br>
 <form method="POST" action="{% url 'add_record' %}">
 	{% csrf_token %}
     {{ form.as_p }}
 
 <br/>
-<button type="submit" class="btn btn-secondary">Add Record</button>
+<button type="submit" class="btn btn-secondary">Dodaj</button>
 </form>
 </div>
 {% endblock %}

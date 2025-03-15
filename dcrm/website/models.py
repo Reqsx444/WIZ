@@ -50,6 +50,7 @@ class Record(models.Model):
     webfiltering = models.CharField(max_length=50, null=True, blank=True)
     ids_ips = models.CharField(max_length=50, null=True, blank=True)
     vdom = models.CharField(max_length=50, null=True, blank=True)
+    procedure = models.CharField(max_length=50, null=True, blank=True, default='Nowa maszyna')
     is_accepted = models.CharField(max_length=50, null=True, blank=True, default='No')
     status = models.CharField(max_length=50, null=True, blank=True, default='In progress')
 

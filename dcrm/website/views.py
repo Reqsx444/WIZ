@@ -5,6 +5,8 @@ from django.contrib import messages
 from .forms import AddRecordForm
 from .models import Record
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from openpyxl import load_workbook
 
 def home(request):
 
@@ -78,46 +80,50 @@ def update_record(request, pk):
 #Testy generowania wyceny
 
 def generate_xlsx(request, record_id):
-    # Pobranie danych rekordu
+    # Pobranie rekordu z bazy danych
     customer_record = Record.objects.get(id=record_id)
 
-    # Tworzenie pliku Excel
-    wb = openpyxl.Workbook()
+    # Ścieżka do szablonu (dostosuj ścieżkę, jeśli plik jest w innym miejscu)
+    template_path = "website/templates/template_vps.xlsx"
+
+    # Otwieramy plik Excel jako szablon
+    wb = openpyxl.load_workbook(template_path)
     ws = wb.active
-    ws.title = "Customer Record"
 
-    # Dodanie nagłówków
-    headers = [
-        'ID', 'Date & Client name', 'vCPU', 'vRAM', 'Adm Hours', 'vConnect', 'Disk', 'Disk profile', 'PBS Backup',
-        'PBS Replication', 'IP', 'Public Network Speed', 'Network', 'DMZ', 'Firewall Premium', 'GeoFirewall',
-        'IPSec', 'SSL-VPN Accounts', 'DNS Guard', 'Webfiltering', 'IDS/IPS/AV', 'VDOM', 'Windows Server 2022 (1Y)',
-        'Windows Server 2022 (3Y)', 'Windows Server 2022 CAL (1Y)', 'Windows Server 2022 CAL (3Y)', 'RDS CAL (1Y)',
-        'RDS CAL (3Y)', 'RDS CAL (PERPETUAL)', 'Accepted', 'Status'
-    ]
-    
-    # Wpisanie nagłówków
-    for col_num, header in enumerate(headers, 1):
-        ws.cell(row=1, column=col_num, value=header)
+    # **Dodajemy nazwę klienta do A1**
+    ws["A1"] = customer_record.client_name
 
-    # Wpisanie danych klienta
-    data = [
-        customer_record.id, f"{customer_record.created_at} {customer_record.client_name}",
-        customer_record.vcpu, customer_record.vram, customer_record.adm_hours, customer_record.vconnect,
-        customer_record.disk, customer_record.disk_profile, customer_record.pbs, customer_record.pbs_replication,
-        customer_record.ip, customer_record.pub_net_speed, customer_record.network, customer_record.dmz,
-        customer_record.fw_premium, customer_record.geofw, customer_record.ipsec, customer_record.ssl_vpn,
-        customer_record.dns_guard, customer_record.webfiltering, customer_record.ids_ips, customer_record.vdom,
-        customer_record.ws2022_1, customer_record.ws2022_3, customer_record.ws2022_cal_1, customer_record.ws2022_cal_3,
-        customer_record.rds_cal_1, customer_record.rds_cal_3, customer_record.rds_cal_perpetual, customer_record.is_accepted,
-        customer_record.status
-    ]
+    # Mapa wartości do podmiany (klucz -> wartość)
+    data_map = {
+        "vCPU": customer_record.vcpu,
+        "RAM": customer_record.vram,
+        "Dysk": customer_record.disk,
+        "Profil wydajnościowy dysku": customer_record.disk_profile,
+        "Backup": customer_record.pbs,
+        "Replikacja Backup": customer_record.pbs_replication,
+        "Adresacja IPv4": customer_record.ip,
+        "Sieć wewnętrzna - 1Gbit/s": customer_record.network,
+        "Firewall Premium": customer_record.fw_premium,
+        "Data Space Shield - IPSec": customer_record.ipsec,
+        "Data Space Shield - SSL-VPN": customer_record.ssl_vpn,
+        "Data Space Shield - Webfiltering": customer_record.webfiltering,
+        "Data Space Shield - IDS/IPS/AV - 100 Mbit/s": customer_record.ids_ips,
+        "Windows Server 2022 (1Y)": customer_record.ws2022_1,
+        "Windows Server 2022 (3Y)": customer_record.ws2022_3,
+    }
 
-    # Wpisanie danych wiersza
-    for col_num, value in enumerate(data, 1):
-        ws.cell(row=2, column=col_num, value=value)
+    # Podmiana wartości w kolumnie C na podstawie nazw w kolumnie A
+    for row in ws.iter_rows(min_row=1, max_row=ws.max_row):
+        cell_a = row[0]  # Komórka w kolumnie A
 
-    # Ustawienia odpowiedzi dla pliku Excel
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        if cell_a.value in data_map:  # Jeśli nazwa pasuje do klucza w słowniku
+            cell_c = row[2]  # Komórka w kolumnie C (indeks 2)
+            cell_c.value = data_map[cell_a.value]  # Wstawienie wartości
+
+    # Przygotowanie pliku do pobrania
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
     response['Content-Disposition'] = f'attachment; filename=customer_record_{customer_record.id}.xlsx'
 
     wb.save(response)

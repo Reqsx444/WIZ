@@ -13,7 +13,7 @@
       <hr>
       <h5 class="card-title">vCPU: {{ customer_record.vcpu }}</h5>
       <h5 class="card-title">vRAM: {{ customer_record.vram }}</h5>
-      <h5 class="card-title">Adm Hours: {{ customer_record.adm_hours }}</h5>
+      <h5 class="card-title">Godziny administracyjne: {{ customer_record.adm_hours }}</h5>
       <h5 class="card-title">vConnect: {{ customer_record.vcconnect }}</h5>
       
       <!-- Separator -->
@@ -22,10 +22,10 @@
       <!-- Storage Section -->
       <h3>Storage</h3>
       <hr>
-      <h5 class="card-title">Disk: {{ customer_record.disk }}</h5>
-      <h5 class="card-title">Disk profile: {{ customer_record.disk_profile }}</h5>
+      <h5 class="card-title">Dysk: {{ customer_record.disk }}</h5>
+      <h5 class="card-title">Profil wydajnościowy dysku: {{ customer_record.disk_profile }}</h5>
       <h5 class="card-title">PBS Backup: {{ customer_record.pbs }}</h5>
-      <h5 class="card-title">PBS Replication: {{ customer_record.pbs_replication }}</h5>
+      <h5 class="card-title">PBS - Replikacja: {{ customer_record.pbs_replication }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
@@ -33,10 +33,10 @@
       <!-- Networking Section -->
       <h3>Networking</h3>
       <hr>
-      <h5 class="card-title">IP: {{ customer_record.ip }}</h5>
-      <h5 class="card-title">Public Network Speed: {{ customer_record.pub_net_speed }}</h5>
-      <h5 class="card-title">Network: {{ customer_record.network }}</h5>
-      <h5 class="card-title">DMZ: {{ customer_record.dmz }}</h5>
+      <h5 class="card-title">Dodatkowe publiczne IP: {{ customer_record.ip }}</h5>
+      <h5 class="card-title">Przepustowość sieci publicznej: {{ customer_record.pub_net_speed }}</h5>
+      <h5 class="card-title">Sieć wewnętrzna 1Gbit/s: {{ customer_record.network }}</h5>
+      <h5 class="card-title">Strefa bezpieczeństwa: {{ customer_record.dmz }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
@@ -44,14 +44,14 @@
       <!-- Security Section -->
       <h3>Security</h3>
       <hr>
-      <h5 class="card-title">Firewall Premium (10 rules pack): {{ customer_record.fw_premium }}</h5>
-      <h5 class="card-title">GeoFirewall: {{ customer_record.geofw }}</h5>
-      <h5 class="card-title">IPSec: {{ customer_record.ipsec }}</h5>
-      <h5 class="card-title">SSL-VPN Accounts: {{ customer_record.ssl_vpn }}</h5>
-      <h5 class="card-title">DNS Guard: {{ customer_record.dns_guard }}</h5>
-      <h5 class="card-title">Webfiltering: {{ customer_record.webfiltering }}</h5>
-      <h5 class="card-title">IDS/IPS/AV: {{ customer_record.ids_ips }}</h5>
-      <h5 class="card-title">VDOM: {{ customer_record.vdom }}</h5>
+      <h5 class="card-title">DSS Firewall Premium (10 reguł): {{ customer_record.fw_premium }}</h5>
+      <h5 class="card-title">DSS GeoFirewall: {{ customer_record.geofw }}</h5>
+      <h5 class="card-title">DSS IPSec: {{ customer_record.ipsec }}</h5>
+      <h5 class="card-title">DSS konto SSL-VPN: {{ customer_record.ssl_vpn }}</h5>
+      <h5 class="card-title">DSS Guard DNS: {{ customer_record.dns_guard }}</h5>
+      <h5 class="card-title">DSS Webfiltering: {{ customer_record.webfiltering }}</h5>
+      <h5 class="card-title">DSS IDS/IPS/AV 100Mbit/s: {{ customer_record.ids_ips }}</h5>
+      <h5 class="card-title">vDOM: {{ customer_record.vdom }}</h5>
       
       <!-- Separator -->
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
@@ -71,6 +71,7 @@
       <div style="border-bottom: 2px solid #ccc; margin: 10px 0;"></div>
       
       <!-- General Information -->
+      <h5 class="card-title"><strong>Typ: </strong>{{ customer_record.type }}</h5>
       <h5 class="card-title"><strong>Accepted: </strong>{{ customer_record.is_accepted }}</h5>
       <h5 class="card-title"><strong>Status: </strong>{{ customer_record.status }}</h5>
     </div>
