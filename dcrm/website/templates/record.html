@@ -1,99 +1,100 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<h1>Podgląd wyceny</h1>
+
 <div class="card">
     <div class="card-header">
         <strong>ID:</strong> {{ customer_record.id }} <br>
         <strong>Date & Client name:</strong> {{ customer_record.created_at }} {{ customer_record.client_name }}
     </div>
     <div class="card-body">
-        <form method="POST" action="{% url 'update_record' customer_record.id %}">
-            {% csrf_token %}
-            
-            <div class="container-fluid">  
-                <!-- Compute Section -->
-                <h3>Compute</h3>
-                <hr>
-                <div class="row g-3">
-                    <div class="col-md-6"><strong>Client Name:</strong> {{ customer_record.client_name }}</div>
-                    <div class="col-md-6"><strong>vCPU:</strong> {{ customer_record.vcpu }}</div>
-                    <div class="col-md-6"><strong>RAM (GB):</strong> {{ customer_record.vram }}</div>
-                    <div class="col-md-6"><strong>Admin Hours:</strong> {{ customer_record.adm_hours }}</div>
-                    <div class="col-md-6"><strong>vCenter Connection:</strong> {{ customer_record.vcconnect }}</div>
-                </div>
+        <div class="container-fluid">  
 
-                <!-- Storage Section -->
-                <h3>Storage</h3>
-                <hr>
-                <div class="row g-3">
-                    <div class="col-md-6"><strong>Disk (GB):</strong> {{ customer_record.disk }}</div>
-                    <div class="col-md-6"><strong>Disk Profile:</strong> {{ customer_record.disk_profile }}</div>
-                    <div class="col-md-6"><strong>PBS Backup (GB):</strong> {{ customer_record.pbs }}</div>
-                    <div class="col-md-6"><strong>PBS Replication:</strong> {{ customer_record.pbs_replication }}</div>
-                </div>
-
-                <!-- Networking Section -->
-                <h3>Networking</h3>
-                <hr>
-                <div class="row g-3">
-                    <div class="col-md-6"><strong>IP Address:</strong> {{ customer_record.ip }}</div>
-                    <div class="col-md-6"><strong>Public Network Speed (Mbps):</strong> {{ customer_record.pub_net_speed }}</div>
-                    <div class="col-md-6"><strong>Network:</strong> {{ customer_record.network }}</div>
-                    <div class="col-md-6"><strong>DMZ:</strong> {{ customer_record.dmz }}</div>
-                </div>
-
-                <!-- Security Section -->
-                <h3>Security</h3>
-                <hr>
-                <div class="row g-3">
-                    <div class="col-md-6"><strong>Firewall Premium:</strong> {{ customer_record.fw_premium }}</div>
-                    <div class="col-md-6"><strong>Geo Firewall:</strong> {{ customer_record.geofw }}</div>
-                    <div class="col-md-6"><strong>IPSec:</strong> {{ customer_record.ipsec }}</div>
-                    <div class="col-md-6"><strong>SSL VPN:</strong> {{ customer_record.ssl_vpn }}</div>
-                    <div class="col-md-6"><strong>DNS Guard:</strong> {{ customer_record.dns_guard }}</div>
-                    <div class="col-md-6"><strong>Web Filtering:</strong> {{ customer_record.webfiltering }}</div>
-                    <div class="col-md-6"><strong>IDS/IPS:</strong> {{ customer_record.ids_ips }}</div>
-                    <div class="col-md-6"><strong>VDOM:</strong> {{ customer_record.vdom }}</div>
-                </div>
-
-                <!-- Licenses Section -->
-                <h3>Licenses</h3>
-                <hr>
-                <div class="row g-3">
-                    <div class="col-md-6"><strong>Windows Server 2022 (1Y):</strong> {{ customer_record.ws2022_1 }}</div>
-                    <div class="col-md-6"><strong>Windows Server 2022 (3Y):</strong> {{ customer_record.ws2022_3 }}</div>
-                    <div class="col-md-6"><strong>Windows Server 2022 CAL (1Y):</strong> {{ customer_record.ws2022_cal_1 }}</div>
-                    <div class="col-md-6"><strong>Windows Server 2022 CAL (3Y):</strong> {{ customer_record.ws2022_cal_3 }}</div>
-                    <div class="col-md-6"><strong>RDS CAL (1Y):</strong> {{ customer_record.rds_cal_1 }}</div>
-                    <div class="col-md-6"><strong>RDS CAL (3Y):</strong> {{ customer_record.rds_cal_3 }}</div>
-                    <div class="col-md-6"><strong>RDS CAL (Perpetual):</strong> {{ customer_record.rds_cal_perpetual }}</div>
-                </div>
-
-                <!-- General Information -->
-                <h3>General Information</h3>
-                <hr>
-                <div class="row g-3">
-                    <div class="col-md-6"><strong>Procedure:</strong> {{ customer_record.procedure }}</div>
-                </div>
-                <div class="row g-3">
-                    <div class="col-md-6"><strong>Accepted:</strong> {{ customer_record.is_accepted }}</div>
-                    <div class="col-md-6"><strong>Status:</strong> {{ customer_record.status }}</div>
-                </div>
+            <!-- Compute Section -->
+            <h3>Compute</h3>
+            <hr>
+            <div class="row g-3">
+                <div class="col-md-6"><strong>vCPU:</strong> {{ customer_record.vcpu }}</div>
+                <div class="col-md-6"><strong>vRAM:</strong> {{ customer_record.vram }}</div>
+                <div class="col-md-6"><strong>Godziny administracyjne:</strong> {{ customer_record.adm_hours }}</div>
+                <div class="col-md-6"><strong>vConnect:</strong> {{ customer_record.vconnect }}</div>
             </div>
-        </br>
 
-<!-- Dodanie przycisków na tym samym poziomie -->
-<div class="d-flex justify-content-between mt-3">
-    <!-- Przyciski po lewej stronie -->
-    <div>
-        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
-        <a href="{% url 'update_record' customer_record.id %}" class="btn btn-secondary">Update</a>
-        <a href="{% url 'generate_xlsx' customer_record.id %}" class="btn btn-success">Download XLSX</a>
-    </div>
-    
-    <!-- Przycisk Delete po prawej stronie -->
-    <div>
-        <a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger">Delete</a>
+            <!-- Storage Section -->
+            <h3 class="mt-3">Storage</h3>
+            <hr>
+            <div class="row g-3">
+                <div class="col-md-6"><strong>Dysk:</strong> {{ customer_record.disk }}</div>
+                <div class="col-md-6"><strong>Profil wydajnościowy dysku:</strong> {{ customer_record.disk_profile }}</div>
+                <div class="col-md-6"><strong>PBS:</strong> {{ customer_record.pbs }}</div>
+                <div class="col-md-6"><strong>PBS - replikacja:</strong> {{ customer_record.pbs_replication }}</div>
+            </div>
+
+            <!-- Networking Section -->
+            <h3 class="mt-3">Networking</h3>
+            <hr>
+            <div class="row g-3">
+                <div class="col-md-6"><strong>Dodatkowe publiczne IP:</strong> {{ customer_record.ip }}</div>
+                <div class="col-md-6"><strong>Przepustowość sieci publicznej:</strong> {{ customer_record.pub_net_speed }}</div>
+                <div class="col-md-6"><strong>Sieć wewnętrzna 1Gbit/s:</strong> {{ customer_record.network }}</div>
+                <div class="col-md-6"><strong>DMZ:</strong> {{ customer_record.dmz }}</div>
+            </div>
+
+            <!-- Security Section -->
+            <h3 class="mt-3">Security</h3>
+            <hr>
+            <div class="row g-3">
+                <div class="col-md-6"><strong>DSS Firewall Premium:</strong> {{ customer_record.fw_premium }}</div>
+                <div class="col-md-6"><strong>DSS GeoFirewall:</strong> {{ customer_record.geofw }}</div>
+                <div class="col-md-6"><strong>DSS IPSec:</strong> {{ customer_record.ipsec }}</div>
+                <div class="col-md-6"><strong>DSS konto SSL-VPN:</strong> {{ customer_record.ssl_vpn }}</div>
+                <div class="col-md-6"><strong>DSS Guard DNS:</strong> {{ customer_record.dns_guard }}</div>
+                <div class="col-md-6"><strong>DSS Webfiltering:</strong> {{ customer_record.webfiltering }}</div>
+                <div class="col-md-6"><strong>DSS IDS/IPS/AV 100Mbit/s:</strong> {{ customer_record.ids_ips }}</div>
+                <div class="col-md-6"><strong>DSS vDOM:</strong> {{ customer_record.vdom }}</div>
+            </div>
+
+            <!-- Licenses Section -->
+            <h3 class="mt-3">Licenses</h3>
+            <hr>
+            <div class="row g-3">
+                <div class="col-md-6"><strong>Windows Server 2022 (1Y):</strong> {{ customer_record.ws2022_1 }}</div>
+                <div class="col-md-6"><strong>Windows Server 2022 (3Y):</strong> {{ customer_record.ws2022_3 }}</div>
+                <div class="col-md-6"><strong>Windows Server 2022 CAL (1Y):</strong> {{ customer_record.ws2022_cal_1 }}</div>
+                <div class="col-md-6"><strong>Windows Server 2022 CAL (3Y):</strong> {{ customer_record.ws2022_cal_3 }}</div>
+                <div class="col-md-6"><strong>RDS CAL (1Y):</strong> {{ customer_record.rds_cal_1 }}</div>
+                <div class="col-md-6"><strong>RDS CAL (3Y):</strong> {{ customer_record.rds_cal_3 }}</div>
+                <div class="col-md-6"><strong>RDS CAL (Perpetual):</strong> {{ customer_record.rds_cal_perpetual }}</div>
+            </div>
+
+            <!-- General Information -->
+            <h3 class="mt-3">General Information</h3>
+            <hr>
+            <div class="row g-3">
+                <div class="col-md-6"><strong>Typ:</strong> {{ customer_record.procedure }}</div>
+                <div class="col-md-6"><strong>Zaakceptowane:</strong> {% if customer_record.is_accepted == 1 %} TAK {% else %} NIE {% endif %}</div>
+                <div class="col-md-6"><strong>Status:</strong> {{ customer_record.status }}</div>
+            </div>
+
+        </div>
+
+    </br>
+        <!-- Przyciski akcji -->
+        <div class="d-flex justify-content-between mt-3">
+            <!-- Lewa strona -->
+            <div>
+                <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+                <a href="{% url 'update_record' customer_record.id %}" class="btn btn-secondary">Update</a>
+                <a href="{% url 'generate_xlsx' customer_record.id %}" class="btn btn-success">Download XLSX</a>
+            </div>
+            
+            <!-- Prawa strona -->
+            <div>
+                <a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+
     </div>
 </div>
 

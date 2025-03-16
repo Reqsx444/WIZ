@@ -228,14 +228,6 @@ class AddRecordForm(forms.ModelForm):
         label_suffix="",
     )
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-
-        if user and not user.groups.filter(name="TECH").exists():
-            self.fields["is_accepted"].widget.attrs["disabled"] = True
-            self.fields["is_accepted"].required = False
-
     class Meta:
         model = Record
         exclude = ("user", )
