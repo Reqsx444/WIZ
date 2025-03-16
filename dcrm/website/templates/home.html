@@ -26,7 +26,7 @@
       <td>{{ record.created_at }}</td>
       <td>{{ record.client_name }}</td>
       <td>{{ record.procedure }}</td>
-      <td>{{ record.is_accepted }}</td>
+      <td>{% if record.is_accepted == '1' %}Tak{% else %}Nie{% endif %}</td>
       <td>{{ record.status }}</td>
     </tr>
   {% endfor %}

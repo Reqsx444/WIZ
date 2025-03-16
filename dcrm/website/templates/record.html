@@ -73,7 +73,7 @@
             <hr>
             <div class="row g-3">
                 <div class="col-md-6"><strong>Typ:</strong> {{ customer_record.procedure }}</div>
-                <div class="col-md-6"><strong>Zaakceptowane:</strong> {% if customer_record.is_accepted == 1 %} TAK {% else %} NIE {% endif %}</div>
+                <div class="col-md-6"><strong>Zaakceptowane:</strong> {% if customer_record.is_accepted == '1' %} TAK {% else %} NIE {% endif %}</div>
                 <div class="col-md-6"><strong>Status:</strong> {{ customer_record.status }}</div>
             </div>
 
@@ -86,7 +86,11 @@
             <div>
                 <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
                 <a href="{% url 'update_record' customer_record.id %}" class="btn btn-secondary">Update</a>
+                {% if  customer_record.is_accepted == '1' %}
                 <a href="{% url 'generate_xlsx' customer_record.id %}" class="btn btn-success">Download XLSX</a>
+                {% else %}
+                <a href="#" class="btn btn-danger">Download XLSX</a>
+                {% endif %}
             </div>
             
             <!-- Prawa strona -->

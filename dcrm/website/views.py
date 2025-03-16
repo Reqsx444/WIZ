@@ -1,4 +1,5 @@
 import openpyxl
+import re
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -78,55 +79,63 @@ def update_record(request, pk):
         return render(request, 'home.html')   
 
 #Testy generowania wyceny
+import re
 
 def generate_xlsx(request, record_id):
     # Pobranie rekordu z bazy danych
     customer_record = Record.objects.get(id=record_id)
 
-    # Ścieżka do szablonu (dostosuj ścieżkę, jeśli plik jest w innym miejscu)
+    # Ścieżka do szablonu
     template_path = "website/templates/template_vps.xlsx"
 
     # Otwieramy plik Excel jako szablon
     wb = openpyxl.load_workbook(template_path)
     ws = wb.active
 
-    # **Dodajemy nazwę klienta do A1**
+    # Dodajemy nazwę klienta do A1
     ws["A1"] = customer_record.client_name
 
-    # Mapa wartości do podmiany (klucz -> wartość)
+    # Mapa wartości do podmiany
     data_map = {
         "vCPU": customer_record.vcpu,
         "RAM": customer_record.vram,
         "Dysk": customer_record.disk,
-        "Profil wydajnościowy dysku": customer_record.disk_profile,
         "Backup": customer_record.pbs,
-        #Do zweryfikowania dmz
         "Strefa bezpieczeństwa": customer_record.dmz,
-        "Replikacja Backup": customer_record.pbs_replication,
-        "Adresacja IPv4": customer_record.ip,
         "Sieć wewnętrzna - 1Gbit/s": customer_record.network,
-        "Firewall Premium": customer_record.fw_premium,
-        "Data Space Shield - IPSec": customer_record.ipsec,
-        "Data Space Shield - SSL-VPN": customer_record.ssl_vpn,
+        "Replikacja Backupu": customer_record.pbs_replication,
+        "vConnect": customer_record.vconnect,
+        "Adresacja IPv4": customer_record.ip,
+        "Godziny administracyjne (h) - Tier III": customer_record.adm_hours,
+        "Data Space Shield - Firewall Premium - 10 reguł": customer_record.fw_premium,
+        "Data Space Shield - Geo Firewall - 1 kraj": customer_record.geofw,
+        "Data Space Shield - IPSEC": customer_record.ipsec,
+        "Data Space Shield - SSL VPNs": customer_record.ssl_vpn,
+        "Data Space Shield - Guard DNS": customer_record.dns_guard,
         "Data Space Shield - Webfiltering": customer_record.webfiltering,
         "Data Space Shield - IDS/IPS/AV - 100 Mbit/s": customer_record.ids_ips,
-        "Windows Server 2022 (1Y)": customer_record.ws2022_1,
-        "Windows Server 2022 (3Y)": customer_record.ws2022_3,
+        "Data Space Shield - vDOM": customer_record.vdom,
     }
 
     # Podmiana wartości w kolumnie C na podstawie nazw w kolumnie A
     for row in ws.iter_rows(min_row=1, max_row=ws.max_row):
         cell_a = row[0]  # Komórka w kolumnie A
-
-        if cell_a.value in data_map:  # Jeśli nazwa pasuje do klucza w słowniku
+        if cell_a.value in data_map:
             cell_c = row[2]  # Komórka w kolumnie C (indeks 2)
             cell_c.value = data_map[cell_a.value]  # Wstawienie wartości
 
+    # Obsługa profilu wydajnościowego dysku
+    disk_profile_row = {1: 10, 2: 11, 3: 12}  # Mapowanie profilu na wiersz w Excelu
+    if customer_record.disk_profile in disk_profile_row:
+        row_idx = disk_profile_row[customer_record.disk_profile]
+        ws[f"C{row_idx}"] = 1  # Wstawienie wartości 1 do odpowiedniego wiersza
+
     # Przygotowanie pliku do pobrania
+    client_name = re.sub(r'[^a-zA-Z0-9_-]', '_', customer_record.client_name)  # Usunięcie znaków specjalnych
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-    response['Content-Disposition'] = f'attachment; filename=customer_record_{customer_record.id}.xlsx'
+    response['Content-Disposition'] = f'attachment; filename=wycena_vps_{client_name}.xlsx'
 
     wb.save(response)
     return response
