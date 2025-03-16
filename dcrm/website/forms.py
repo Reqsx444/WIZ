@@ -214,8 +214,8 @@ class AddRecordForm(forms.ModelForm):
         label_suffix="",
     )
     is_accepted = forms.ChoiceField(
-        choices=[(0, "Nie"), (1, "Tak")],
-        required=True,
+        choices=[("Nie", "Nie"), ("Tak", "Tak")],
+        required=False,
         widget=forms.Select(attrs={"class": "form-control"}),
         label="Zaakceptowane",
         label_suffix="",

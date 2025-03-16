@@ -76,11 +76,14 @@
                 <hr>
                 <div class="row g-3">
                     <div class="col-md-6">{{ form.procedure.label_tag }} {{ form.procedure }}</div>
+
+                    {% if request.user.groups.all.0.name == "TECH" %}
+                        <div class="col-md-6">{{ form.is_accepted.label_tag }} {{ form.is_accepted }}</div>
+                    {% endif %}
                 </div>
                 <div class="row g-3">
                     <div class="col-md-6">{{ form.status.label_tag }} {{ form.status }}</div>
                 </div>
-            </div>
         </br>
             <!-- Submit Button -->
             <div class="text-center mt-3">
