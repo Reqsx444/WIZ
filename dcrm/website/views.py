@@ -79,7 +79,6 @@ def update_record(request, pk):
         return render(request, 'home.html')   
 
 #Testy generowania wyceny
-import re
 
 def generate_xlsx(request, record_id):
     # Pobranie rekordu z bazy danych
@@ -131,11 +130,13 @@ def generate_xlsx(request, record_id):
             cell_c = row[2]  # Komórka w kolumnie C (indeks 2)
             cell_c.value = data_map[cell_a.value]  # Wstawienie wartości
 
-    # Obsługa profilu wydajnościowego dysku
-    disk_profile_row = {1: 10, 2: 11, 3: 12}  # Mapowanie profilu na wiersz w Excelu
-    if customer_record.disk_profile in disk_profile_row:
-        row_idx = disk_profile_row[customer_record.disk_profile]
-        ws[f"C{row_idx}"] = 1  # Wstawienie wartości 1 do odpowiedniego wiersza
+    # Obsługa zmiennej dmz
+    if customer_record.dmz == '0':
+        ws["C14"].value = 1
+        ws["C15"].value = None  # Usunięcie wartości z C15, jeśli wcześniej coś tam było
+    elif customer_record.dmz == '1':
+        ws["C15"].value = 1
+        ws["C14"].value = None  # Usunięcie wartości z C14, jeśli wcześniej coś tam było
 
     # Przygotowanie pliku do pobrania
     client_name = re.sub(r'[^a-zA-Z0-9_-]', '_', customer_record.client_name)  # Usunięcie znaków specjalnych
