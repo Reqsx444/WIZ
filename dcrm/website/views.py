@@ -123,12 +123,11 @@ def generate_xlsx(request, record_id):
         "Data Space Shield - vDOM": customer_record.vdom,
     }
 
-    # Podmiana wartości w kolumnie C na podstawie nazw w kolumnie A
-    for row in ws.iter_rows(min_row=1, max_row=ws.max_row):
-        cell_a = row[0]  # Komórka w kolumnie A
-        if cell_a.value in data_map:
-            cell_c = row[2]  # Komórka w kolumnie C (indeks 2)
-            cell_c.value = data_map[cell_a.value]  # Wstawienie wartości
+    # Obsługa profilu wydajnościowego dysku
+    disk_profile_row = {1: 10, 2: 11, 3: 12}  # Mapowanie profilu na wiersz w Excelu
+    if customer_record.disk_profile in disk_profile_row:
+        row_idx = disk_profile_row[customer_record.disk_profile]
+        ws[f"C{row_idx}"] = 1  # Wstawienie wartości 1 do odpowiedniego wiersza
 
     # Obsługa zmiennej dmz
     if customer_record.dmz == '0':
