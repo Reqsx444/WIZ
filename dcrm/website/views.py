@@ -56,13 +56,38 @@ def add_record(request):
     form = AddRecordForm(request.POST or None)
     if request.user.is_authenticated:
         if request.method == "POST":
+            vcpu = request.POST.get("vcpu")
+            vram = request.POST.get("vram")
+
+            # Sprawdzanie czy wartości są liczbami przed konwersją do int
+            if vcpu and not vcpu.isdigit():
+                messages.error(request, "vCPU musi być liczbą!")
+                return render(request, 'add_record.html', {'form': form})
+            
+            if vram and not vram.isdigit():
+                messages.error(request, "vRAM musi być liczbą!")
+                return render(request, 'add_record.html', {'form': form})
+
+            vcpu = int(vcpu) if vcpu else 0
+            vram = int(vram) if vram else 0
+
+            # Sprawdzenie, czy vCPU i vRAM są zgodne z wymaganiami
+            if vcpu > 32:
+                messages.error(request, "Maksymalna dozwolona wartość vCPU to 32!")
+                return render(request, 'add_record.html', {'form': form})
+
+            if vram > 32:
+                messages.error(request, "Maksymalna dozwolona wartość vRAM to 32!")
+                return render(request, 'add_record.html', {'form': form})
+
             if form.is_valid():
-                add_record = form.save()
+                form.save()
                 messages.success(request, "Record Added...")
                 return redirect('home')
-        return render(request, 'add_record.html', {'form':form})
+
+        return render(request, 'add_record.html', {'form': form})
     else:
-        messages.success(request, "You must be logged in...")
+        messages.error(request, "You must be logged in...")
         return redirect('home')
 
 def update_record(request, pk):
