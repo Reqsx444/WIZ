@@ -104,7 +104,7 @@ class AddRecordForm(forms.ModelForm):
         label_suffix=""
     )
     geofw = forms.ChoiceField(
-        choices=[(0, 1), ("Yes", "Yes")],
+        choices=[(0, "No"), (1, "Yes")],
         required=False,
         widget=forms.Select(attrs={"class": "form-control"}),
         label="DSS GeoFirewall",
