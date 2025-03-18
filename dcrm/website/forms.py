@@ -34,7 +34,7 @@ class AddRecordForm(forms.ModelForm):
         widget=forms.TextInput(attrs={"class": "form-control"}),
         label="vConnect",
         label_suffix="",
-        initial="0"
+        initial=0
     )
 
     # Storage Section
