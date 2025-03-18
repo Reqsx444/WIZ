@@ -187,7 +187,7 @@ def generate_xlsx(request, record_id):
         "Data Space Shield - SSL VPNs": customer_record.ssl_vpn,
         "Data Space Shield - Guard DNS": customer_record.dns_guard,
         "Data Space Shield - Webfiltering": customer_record.webfiltering,
-        "Data Space Shield - IDS/IPS/AV - 100 Mbit/s": customer_record.ids_ips,
+        "Data Space Shield - IDS/IPS/AV - 100Mbit/s": customer_record.ids_ips,
         "Data Space Shield - vDOM": customer_record.vdom,
     }
 

@@ -143,8 +143,7 @@ class AddRecordForm(forms.ModelForm):
         required=False,
         widget=forms.Select(attrs={"class": "form-control"}),
         label="DSS IDS/IPS/AV 100Mbit/s",
-        label_suffix="",
-        initial="0"
+        label_suffix=""
     )
     vdom = forms.ChoiceField(
         choices=[(0, "No"), (1, "Yes")],
