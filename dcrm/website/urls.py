@@ -10,4 +10,6 @@ urlpatterns = [
     path('add_record/', views.add_record, name="add_record"),
     path('update_record/<int:pk>', views.update_record, name="update_record"),
     path('generate_xlsx/<int:record_id>/', views.generate_xlsx, name='generate_xlsx'),
+    path('add_record/', views.add_record, name="add_record"),
+    path('work_in_progress/', views.work_in_progress, name="work_in_progress"),
 ]

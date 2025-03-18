@@ -41,6 +41,9 @@ def logout_user(request):
     messages.success(request, "Zostałeś wylogowany...")
     return redirect('home')
 
+def work_in_progress(request):
+        return render(request, 'work_in_progress.html', {})
+
 def customer_record(request, pk):
     if request.user.is_authenticated:
         customer_record = Record.objects.get(id=pk)
