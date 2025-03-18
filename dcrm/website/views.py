@@ -58,18 +58,30 @@ def add_record(request):
         if request.method == "POST":
             vcpu = request.POST.get("vcpu")
             vram = request.POST.get("vram")
+            disk = request.POST.get("disk")
+            pbs = request.POST.get("pbs")
 
             # Sprawdzanie czy wartości są liczbami przed konwersją do int
             if vcpu and not vcpu.isdigit():
                 messages.error(request, "vCPU musi być liczbą!")
                 return render(request, 'add_record.html', {'form': form})
-            
+
             if vram and not vram.isdigit():
                 messages.error(request, "vRAM musi być liczbą!")
                 return render(request, 'add_record.html', {'form': form})
 
+            if disk and not disk.isdigit():
+                messages.error(request, "Dysk musi być liczbą!")
+                return render(request, 'add_record.html', {'form': form})
+
+            if pbs and not pbs.isdigit():
+                messages.error(request, "PBS musi być liczbą!")
+                return render(request, 'add_record.html', {'form': form})
+
             vcpu = int(vcpu) if vcpu else 0
             vram = int(vram) if vram else 0
+            disk = int(disk) if disk else 0
+            pbs = int(pbs) if pbs else 0
 
             # Sprawdzenie, czy vCPU i vRAM są zgodne z wymaganiami
             if vcpu > 32:
@@ -78,6 +90,15 @@ def add_record(request):
 
             if vram > 32:
                 messages.error(request, "Maksymalna dozwolona wartość vRAM to 32!")
+                return render(request, 'add_record.html', {'form': form})
+
+            if disk < 20 or disk > 1000:
+                messages.error(request, "Rozmiar dysku możliwy do wyboru to zakres od 20 do 1000!")
+                return render(request, 'add_record.html', {'form': form})
+
+            # Sprawdzenie, czy PBS jest taki sam jak Disk
+            if pbs != disk:
+                messages.error(request, "PBS musi być równy wartości dysku!")
                 return render(request, 'add_record.html', {'form': form})
 
             if form.is_valid():
@@ -93,15 +114,27 @@ def add_record(request):
 def update_record(request, pk):
     if request.user.is_authenticated:
         current_record = Record.objects.get(id=pk)
+        previous_is_accepted = current_record.is_accepted  # Pobranie starej wartości
+        
         form = AddRecordForm(request.POST or None, instance=current_record)
+        
         if form.is_valid():
-            form.save()
+            updated_record = form.save(commit=False)  # Zatrzymujemy zapis, aby sprawdzić zmiany
+            
+            # Jeśli użytkownik nie zmienił wartości is_accepted, to ustawiamy na 0
+            if previous_is_accepted == updated_record.is_accepted:
+                updated_record.is_accepted = 0
+
+            updated_record.save()  # Zapisujemy zmiany
+            
             messages.success(request, "Record has been updated...")
             return redirect('home')
-        return render(request, 'update_record.html', {'form':form})
+        
+        return render(request, 'update_record.html', {'form': form})
+    
     else:
-        messages.success(request, "You Must be logged in to do that...")
-        return render(request, 'home.html')   
+        messages.error(request, "You must be logged in to do that...")
+        return redirect('home')
 
 #Testy generowania wyceny
 
