@@ -10,28 +10,35 @@ from django.shortcuts import get_object_or_404
 from openpyxl import load_workbook
 
 def home(request):
-
+    # Pobieranie wszystkich rekordów
     records = Record.objects.all()
 
-    #Check to see if logging in
+    # Sprawdzanie, czy wykonano wyszukiwanie
+    query = request.GET.get('q', '')  # Pobiera wartość wyszukiwania z parametru GET
+    if query:
+        # Filtrowanie rekordów na podstawie 'id' lub 'client_name'
+        records = records.filter(id__icontains=query) | records.filter(client_name__icontains=query)
+
+    # Sprawdzanie logowania
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        # Authenticate
+        # Autentykacja
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, "You Have Been Logged In!")
+            messages.success(request, "Zalogowano!")
             return redirect('home')
         else:
-            messages.success(request, "There Was An Error Logging In, Please Try Again...")
+            messages.success(request, "Wystąpił błąd podczas logowania. Spróbuj ponownie...")
             return redirect('home')
     else:
-        return render(request, 'home.html', {'records':records})
+        # Renderowanie widoku z rekordami
+        return render(request, 'home.html', {'records': records, 'query': query})
 
 def logout_user(request):
     logout(request)
-    messages.success(request, "You Have Been Logged Out...")
+    messages.success(request, "Zostałeś wylogowany...")
     return redirect('home')
 
 def customer_record(request, pk):
@@ -39,17 +46,17 @@ def customer_record(request, pk):
         customer_record = Record.objects.get(id=pk)
         return render(request, 'record.html', {'customer_record':customer_record})
     else:
-        messages.success(request, "You must be logged In ...")
+        messages.success(request, "Musisz się zalogować ...")
         return redirect('home')
 
 def delete_record(request, pk):
     if request.user.is_authenticated:
         delete_id = Record.objects.get(id=pk)
         delete_id.delete()
-        messages.success(request, "Record Deletes Successfully...")
+        messages.success(request, "Wycena usunięta poprawnie...")
         return redirect('home')
     else:
-        messages.success(request, "You Must be logged in to do that...")
+        messages.success(request, "Musisz się zalogować...")
         return render(request, 'home.html')
 
 def add_record(request):
@@ -103,12 +110,12 @@ def add_record(request):
 
             if form.is_valid():
                 form.save()
-                messages.success(request, "Record Added...")
+                messages.success(request, "Wycena dodana...")
                 return redirect('home')
 
         return render(request, 'add_record.html', {'form': form})
     else:
-        messages.error(request, "You must be logged in...")
+        messages.error(request, "Musisz się zalogować...")
         return redirect('home')
 
 def update_record(request, pk):
@@ -127,13 +134,13 @@ def update_record(request, pk):
 
             updated_record.save()  # Zapisujemy zmiany
             
-            messages.success(request, "Record has been updated...")
+            messages.success(request, "Wycena zmodyfikowana...")
             return redirect('home')
         
         return render(request, 'update_record.html', {'form': form})
     
     else:
-        messages.error(request, "You must be logged in to do that...")
+        messages.error(request, "Musisz się zalogować...")
         return redirect('home')
 
 #Testy generowania wyceny
