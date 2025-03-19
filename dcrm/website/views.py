@@ -124,24 +124,62 @@ def add_record(request):
 def update_record(request, pk):
     if request.user.is_authenticated:
         current_record = Record.objects.get(id=pk)
-        previous_is_accepted = current_record.is_accepted  # Pobranie starej wartości
+        previous_is_accepted = current_record.is_accepted
         
         form = AddRecordForm(request.POST or None, instance=current_record)
         
-        if form.is_valid():
-            updated_record = form.save(commit=False)  # Zatrzymujemy zapis, aby sprawdzić zmiany
-            
-            # Jeśli użytkownik nie zmienił wartości is_accepted, to ustawiamy na 0
-            if previous_is_accepted == updated_record.is_accepted:
-                updated_record.is_accepted = 0
+        if request.method == "POST":
+            vcpu = request.POST.get("vcpu")
+            vram = request.POST.get("vram")
+            disk = request.POST.get("disk")
+            pbs = request.POST.get("pbs")
 
-            updated_record.save()  # Zapisujemy zmiany
-            
-            messages.success(request, "Wycena zmodyfikowana...")
-            return redirect('home')
+            if vcpu and not vcpu.isdigit():
+                messages.error(request, "vCPU musi być liczbą!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if vram and not vram.isdigit():
+                messages.error(request, "vRAM musi być liczbą!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if disk and not disk.isdigit():
+                messages.error(request, "Dysk musi być liczbą!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if pbs and not pbs.isdigit():
+                messages.error(request, "PBS musi być liczbą!")
+                return render(request, 'update_record.html', {'form': form})
+
+            vcpu = int(vcpu) if vcpu else 0
+            vram = int(vram) if vram else 0
+            disk = int(disk) if disk else 0
+            pbs = int(pbs) if pbs else 0
+
+            if vcpu > 32:
+                messages.error(request, "Maksymalna dozwolona wartość vCPU to 32!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if vram > 32:
+                messages.error(request, "Maksymalna dozwolona wartość vRAM to 32!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if disk < 20 or disk > 1000:
+                messages.error(request, "Rozmiar dysku możliwy do wyboru to zakres od 20 do 1000!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if pbs != disk:
+                messages.error(request, "PBS musi być równy wartości dysku!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if form.is_valid():
+                updated_record = form.save(commit=False)
+                if previous_is_accepted == updated_record.is_accepted:
+                    updated_record.is_accepted = 0
+                updated_record.save()
+                messages.success(request, "Wycena zmodyfikowana...")
+                return redirect('home')
         
         return render(request, 'update_record.html', {'form': form})
-    
     else:
         messages.error(request, "Musisz się zalogować...")
         return redirect('home')
