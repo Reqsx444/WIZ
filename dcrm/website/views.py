@@ -70,6 +70,7 @@ def add_record(request):
             vram = request.POST.get("vram")
             disk = request.POST.get("disk")
             pbs = request.POST.get("pbs")
+            pbs_replication = request.POST.get("pbs_replication")
 
             # Sprawdzanie czy wartości są liczbami przed konwersją do int
             if vcpu and not vcpu.isdigit():
@@ -87,11 +88,16 @@ def add_record(request):
             if pbs and not pbs.isdigit():
                 messages.error(request, "PBS musi być liczbą!")
                 return render(request, 'add_record.html', {'form': form})
+            
+            if pbs_replication and not pbs_replication.isdigit():
+                messages.error(request, "Replikacja PBS musi być liczbą!")
+                return render(request, 'add_record.html', {'form': form})
 
             vcpu = int(vcpu) if vcpu else 0
             vram = int(vram) if vram else 0
             disk = int(disk) if disk else 0
             pbs = int(pbs) if pbs else 0
+            pbs_replication = int(pbs_replication) if pbs_replication else 0
 
             # Sprawdzenie, czy vCPU i vRAM są zgodne z wymaganiami
             if vcpu > 32:
@@ -116,6 +122,10 @@ def add_record(request):
                 messages.success(request, "Wycena dodana...")
                 return redirect('home')
 
+            if pbs_replication not in [0, pbs]:
+                messages.error(request, "Replikacja PBS może wynosić 0 lub być równa wartości PBS!")
+                return render(request, 'add_record.html', {'form': form})
+
         return render(request, 'add_record.html', {'form': form})
     else:
         messages.error(request, "Musisz się zalogować...")
@@ -133,6 +143,7 @@ def update_record(request, pk):
             vram = request.POST.get("vram")
             disk = request.POST.get("disk")
             pbs = request.POST.get("pbs")
+            pbs_replication = request.POST.get("pbs_replication")
 
             if vcpu and not vcpu.isdigit():
                 messages.error(request, "vCPU musi być liczbą!")
@@ -150,10 +161,15 @@ def update_record(request, pk):
                 messages.error(request, "PBS musi być liczbą!")
                 return render(request, 'update_record.html', {'form': form})
 
+            if pbs_replication and not pbs_replication.isdigit():
+                messages.error(request, "Replikacja PBS musi być liczbą!")
+                return render(request, 'update_record.html', {'form': form})
+
             vcpu = int(vcpu) if vcpu else 0
             vram = int(vram) if vram else 0
             disk = int(disk) if disk else 0
             pbs = int(pbs) if pbs else 0
+            pbs_replication = int(pbs_replication) if pbs_replication else 0
 
             if vcpu > 32:
                 messages.error(request, "Maksymalna dozwolona wartość vCPU to 32!")
@@ -169,6 +185,10 @@ def update_record(request, pk):
 
             if pbs != disk:
                 messages.error(request, "PBS musi być równy wartości dysku!")
+                return render(request, 'update_record.html', {'form': form})
+
+            if pbs_replication not in [0, pbs]:
+                messages.error(request, "Replikacja PBS może wynosić 0 lub być równa wartości PBS!")
                 return render(request, 'update_record.html', {'form': form})
 
             if form.is_valid():
