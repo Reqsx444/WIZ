@@ -220,33 +220,39 @@ def generate_xlsx(request, record_id):
     # Dodajemy nazwę klienta do A1
     ws["A1"] = customer_record.client_name
 
-    # Mapa wartości do podmiany
+    # Sprawdzamy wartość procedury i ustawiamy odpowiednią wartość w B1
+    if customer_record.procedure == "Nowy VPS":
+        ws["B1"] = "Nowy VPS"
+    elif customer_record.procedure == "Rozbudowa obecnego VPS":
+        ws["B1"] = "Rozbudowa obecnego VPS"
+
+    # Mapa wartości do podmiany (upewniamy się, że wartości są liczbami)
     data_map = {
-        "vCPU": customer_record.vcpu,
-        "RAM": customer_record.vram,
-        "Dysk": customer_record.disk,
-        "Backup": customer_record.pbs,
-        "Strefa bezpieczeństwa": customer_record.dmz,
-        "Sieć wewnętrzna - 1Gbit/s": customer_record.network,
-        "Replikacja Backupu": customer_record.pbs_replication,
-        "vConnect": customer_record.vconnect,
+        "vCPU": int(customer_record.vcpu) if customer_record.vcpu is not None else 0,
+        "RAM": int(customer_record.vram) if customer_record.vram is not None else 0,
+        "Dysk": int(customer_record.disk) if customer_record.disk is not None else 0,
+        "Backup": int(customer_record.pbs) if customer_record.pbs is not None else 0,
+        "Strefa bezpieczeństwa": int(customer_record.dmz) if customer_record.dmz is not None else 0,
+        "Sieć wewnętrzna - 1Gbit/s": int(customer_record.network) if customer_record.network is not None else 0,
+        "Replikacja Backupu": int(customer_record.pbs_replication) if customer_record.pbs_replication is not None else 0,
+        "vConnect": int(customer_record.vconnect) if customer_record.vconnect is not None else 0,
         "Adresacja IPv4": customer_record.ip,
-        "Godziny administracyjne (h) - Tier III": customer_record.adm_hours,
-        "Windows Server 2022 Standard - 8 Core License Pack 1 Year": customer_record.ws2022_1,
-        "Windows Server 2022 Standard - 8 Core License Pack 3 Year": customer_record.ws2022_3,
-        "Windows Server 2022 CAL - 1 User CAL - 1 year": customer_record.ws2022_cal_1,
-        "Windows Server 2022 CAL - 1 User CAL - 3 year": customer_record.ws2022_cal_3,
-        "Windows Server 2022 Remote Desktop Services - 1 User CAL 1 Year": customer_record.rds_cal_1,
-        "Windows Server 2022 Remote Desktop Services - 1 User CAL 3 Year": customer_record.rds_cal_3,
-        "Windows Server 2022 Remote Desktop Services - 1 Device CAL - perpetual": customer_record.rds_cal_perpetual,
-        "Data Space Shield - Firewall Premium - 10 reguł": customer_record.fw_premium,
-        "Data Space Shield - Geo Firewall - 1 kraj": customer_record.geofw,
-        "Data Space Shield - IPSEC": customer_record.ipsec,
-        "Data Space Shield - SSL VPNs": customer_record.ssl_vpn,
-        "Data Space Shield - Guard DNS": customer_record.dns_guard,
-        "Data Space Shield - Webfiltering": customer_record.webfiltering,
-        "Data Space Shield - IDS/IPS/AV - 100Mbit/s": customer_record.ids_ips,
-        "Data Space Shield - vDOM": customer_record.vdom,
+        "Godziny administracyjne (h) - Tier III": float(customer_record.adm_hours) if customer_record.adm_hours is not None else 0.0,
+        "Windows Server 2022 Standard - 8 Core License Pack 1 Year": int(customer_record.ws2022_1) if customer_record.ws2022_1 is not None else 0,
+        "Windows Server 2022 Standard - 8 Core License Pack 3 Year": int(customer_record.ws2022_3) if customer_record.ws2022_3 is not None else 0,
+        "Windows Server 2022 CAL - 1 User CAL - 1 year": int(customer_record.ws2022_cal_1) if customer_record.ws2022_cal_1 is not None else 0,
+        "Windows Server 2022 CAL - 1 User CAL - 3 year": int(customer_record.ws2022_cal_3) if customer_record.ws2022_cal_3 is not None else 0,
+        "Windows Server 2022 Remote Desktop Services - 1 User CAL 1 Year": int(customer_record.rds_cal_1) if customer_record.rds_cal_1 is not None else 0,
+        "Windows Server 2022 Remote Desktop Services - 1 User CAL 3 Year": int(customer_record.rds_cal_3) if customer_record.rds_cal_3 is not None else 0,
+        "Windows Server 2022 Remote Desktop Services - 1 Device CAL - perpetual": int(customer_record.rds_cal_perpetual) if customer_record.rds_cal_perpetual is not None else 0,
+        "Data Space Shield - Firewall Premium - 10 reguł": int(customer_record.fw_premium) if customer_record.fw_premium is not None else 0,
+        "Data Space Shield - Geo Firewall - 1 kraj": int(customer_record.geofw) if customer_record.geofw is not None else 0,
+        "Data Space Shield - IPSEC": int(customer_record.ipsec) if customer_record.ipsec is not None else 0,
+        "Data Space Shield - SSL VPNs": int(customer_record.ssl_vpn) if customer_record.ssl_vpn is not None else 0,
+        "Data Space Shield - Guard DNS": int(customer_record.dns_guard) if customer_record.dns_guard is not None else 0,
+        "Data Space Shield - Webfiltering": int(customer_record.webfiltering) if customer_record.webfiltering is not None else 0,
+        "Data Space Shield - IDS/IPS/AV - 100Mbit/s": int(customer_record.ids_ips) if customer_record.ids_ips is not None else 0,
+        "Data Space Shield - vDOM": int(customer_record.vdom) if customer_record.vdom is not None else 0,
     }
 
     # Podmiana wartości w kolumnie C na podstawie nazw w kolumnie A
