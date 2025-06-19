@@ -5,6 +5,6 @@ Due to confidentiality, the XML template has been sanitized of all data.
 
 ## POV:
 ![Logout](./0.PNG)
-![Logout](./1.PNG)
-![Logout](./2.PNG)
+![Logout](./01.PNG)
+![Logout](./02.PNG)
 ![Logout](./3.PNG)
